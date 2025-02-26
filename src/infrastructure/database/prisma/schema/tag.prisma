@@ -1,0 +1,7 @@
+model Tag {
+    id        String    @id
+    name      String    @unique
+    createdAt DateTime
+    updatedAt DateTime?
+    deletedAt DateTime?
+}
