@@ -38,7 +38,7 @@ export class TagUseCase {
   }
 
   async getTagById(id: string): Promise<TagResponseDTO> {
-    const tag = await this.getTagById(id);
+    const tag = await this.tagRepository.findById(id);
     if (!tag) {
       throw new Errors.MoleculerClientError(
         'Registro não encontrado',
@@ -51,7 +51,7 @@ export class TagUseCase {
   }
 
   async deleteTag(id: string): Promise<void> {
-    const tag = await this.getTagById(id);
+    const tag = await this.tagRepository.findById(id);
     if (!tag) {
       throw new Errors.MoleculerClientError(
         'Registro não encontrado',
