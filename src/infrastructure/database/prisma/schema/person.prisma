@@ -1,0 +1,22 @@
+model Person {
+    id            String      @id
+    legalPerson   Boolean
+    document      String
+    name          String
+    city          String
+    state         String
+    cep           String
+    key           String
+    latitude      Float
+    longitude     Float
+    polygon       String
+    isHeadquarter Boolean
+    isOrigin      Boolean
+    isDestiny     Boolean
+    isCarrier     Boolean
+    tags          PersonTag[]
+    createdAt     DateTime
+    updatedAt     DateTime?
+    deletedAt     DateTime?
+    Tag           Tag[]
+}
