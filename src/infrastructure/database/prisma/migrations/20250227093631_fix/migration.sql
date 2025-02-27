@@ -48,3 +48,6 @@ ALTER TABLE "new_Tag" RENAME TO "Tag";
 CREATE UNIQUE INDEX "Tag_name_key" ON "Tag"("name");
 PRAGMA foreign_keys=ON;
 PRAGMA defer_foreign_keys=OFF;
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Person_key_key" ON "Person"("key");

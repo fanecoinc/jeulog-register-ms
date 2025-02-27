@@ -6,14 +6,15 @@ model Person {
     city          String
     state         String
     cep           String
-    key           String
-    latitude      Float
-    longitude     Float
+    key           String      @unique
+    latitude      Float?
+    longitude     Float?
     polygon       String
     isHeadquarter Boolean
     isOrigin      Boolean
     isDestiny     Boolean
     isCarrier     Boolean
+    isActive      Boolean     @default(true)
     tags          PersonTag[]
     createdAt     DateTime
     updatedAt     DateTime?
