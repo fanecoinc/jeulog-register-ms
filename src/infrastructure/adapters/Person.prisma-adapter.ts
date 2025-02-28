@@ -20,9 +20,11 @@ export class PrismaPersonRepository implements IPersonRepository {
       instance.isDestiny,
       instance.isCarrier,
       instance.isActive,
-      instance.tags.map((p: any) => {
-        new Tag(p.id, p.name, p.createdAt);
-      }),
+      instance.tags
+        ? instance.tags.map((p: any) => {
+            return new Tag(p.tag.id, p.tag.name, p.tag.createdAt);
+          })
+        : [],
       instance.createdAt,
       instance.latitude ?? undefined,
       instance.longitude ?? undefined,

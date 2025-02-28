@@ -9,8 +9,8 @@ import { ITagRepository } from '@/domain/ports/Tag.repository';
 export class TagService {
   private tagUseCase: TagUseCase;
 
-  constructor(private TagRepository: ITagRepository) {
-    this.tagUseCase = new TagUseCase(this.TagRepository);
+  constructor(private tagRepository: ITagRepository) {
+    this.tagUseCase = new TagUseCase(this.tagRepository);
   }
 
   async getAllTags(): Promise<TagResponseDTO[]> {
