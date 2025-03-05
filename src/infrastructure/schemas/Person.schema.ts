@@ -29,10 +29,11 @@ const personEditSchema = z.object({
   state: z.string().optional(),
   cep: z.string().optional(),
   polygon: z
-    .array(
-      z.tuple([z.number().min(-90).max(90), z.number().min(-180).max(180)])
+    .string()
+    .regex(
+      /^POLYGON\(\(\s*(-?\d+(\.\d+)?\s+-?\d+(\.\d+)?\s*,\s*){2,}-?\d+(\.\d+)?\s+-?\d+(\.\d+)?\s*\)\)$/,
+      'Formato de POLYGON inválido'
     )
-    .min(3)
     .optional(),
   isHeadquarter: z.boolean().optional(),
   isOrigin: z.boolean().optional(),

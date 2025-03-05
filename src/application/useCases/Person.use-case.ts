@@ -73,7 +73,8 @@ export class PersonUseCase {
       );
     }
 
-    let tags;
+    let tags = undefined;
+    let data;
 
     if (dto.tagIds) {
       tags = await Promise.all(
@@ -89,10 +90,18 @@ export class PersonUseCase {
           return obj;
         })
       );
+
+      const { tagIds, ...rest } = dto;
+      data = {
+        ...rest,
+        tags,
+      };
     }
 
+    data = data ?? dto;
+
     const updatedPerson = await this.personRepository.update(person.id, {
-      ...dto,
+      ...data,
       updatedAt: new Date(),
     });
 

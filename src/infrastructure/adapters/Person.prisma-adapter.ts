@@ -106,9 +106,11 @@ export class PrismaPersonRepository implements IPersonRepository {
       prismaClient.person.update({
         where: { id },
         data: {
-          tags: {
-            deleteMany: {},
-          },
+          tags: person.tags
+            ? {
+                deleteMany: {},
+              }
+            : undefined,
         },
       }),
 
