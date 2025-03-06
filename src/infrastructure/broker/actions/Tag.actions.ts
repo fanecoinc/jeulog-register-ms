@@ -55,7 +55,7 @@ export const tagActions = {
       const { id, ...dto } = ctx.params;
       await uuidSchema.parseAsync(id).catch(errorHandler);
       await tagEditSchema.parseAsync(dto).catch(errorHandler);
-      return await tagService.editTag(id, dto);
+      return await tagService.editTag(id, dto).catch(errorHandler);
     },
     openapi: {
       description: 'Edição de tag',

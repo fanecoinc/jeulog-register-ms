@@ -3,7 +3,7 @@ import { prismaClient } from '../database';
 import { Tag } from '@/domain/entities/Tag';
 
 export class PrismaTagRepository implements ITagRepository {
-  private mapToUserEntity(instance: Record<string, any>): Tag {
+  private mapToTagEntity(instance: Record<string, any>): Tag {
     return new Tag(
       instance.id,
       instance.name,
@@ -15,7 +15,7 @@ export class PrismaTagRepository implements ITagRepository {
 
   async getAll(): Promise<Tag[]> {
     const tags = await prismaClient.tag.findMany();
-    return tags.map(this.mapToUserEntity);
+    return tags.map(this.mapToTagEntity);
   }
 
   async create(tag: Tag): Promise<Tag> {
@@ -27,7 +27,7 @@ export class PrismaTagRepository implements ITagRepository {
       },
     });
 
-    return this.mapToUserEntity(createdTag);
+    return this.mapToTagEntity(createdTag);
   }
 
   async findById(id: string): Promise<Tag | null> {
@@ -36,7 +36,7 @@ export class PrismaTagRepository implements ITagRepository {
       return null;
     }
 
-    return this.mapToUserEntity(tag);
+    return this.mapToTagEntity(tag);
   }
 
   async update(id: string, tag: Partial<Tag>): Promise<Tag> {
@@ -48,7 +48,7 @@ export class PrismaTagRepository implements ITagRepository {
       },
     });
 
-    return this.mapToUserEntity(updatedTag);
+    return this.mapToTagEntity(updatedTag);
   }
 
   async delete(id: string): Promise<void> {
