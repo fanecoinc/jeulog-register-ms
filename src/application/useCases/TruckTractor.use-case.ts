@@ -29,8 +29,9 @@ export class TruckTractorUseCase {
       dto.isActive ?? true,
       new Date()
     );
-    const createdTag = await this.truckTractorRepository.create(truckTractor);
-    return toTruckTractorResponseDTO(createdTag);
+    const createdTruckTractor =
+      await this.truckTractorRepository.create(truckTractor);
+    return toTruckTractorResponseDTO(createdTruckTractor);
   }
 
   async updateTruckTractor(
