@@ -1,0 +1,7 @@
+model Cart {
+    id        String    @id
+    plate     String    @unique
+    isActive  Boolean
+    createdAt DateTime
+    updatedAt DateTime?
+}
