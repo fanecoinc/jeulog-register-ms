@@ -4,12 +4,12 @@ const tagCreationSchema = z
   .object({
     name: z.string(),
   })
-  .strict('Campo desconhecido inválido');
+  .strict('Campo desconhecido');
 
 const tagEditSchema = z
   .object({
     name: z.string().optional(),
   })
-  .strict('Campo desconhecido inválido');
+  .strict('Campo desconhecido');
 
 export { tagCreationSchema, tagEditSchema };
