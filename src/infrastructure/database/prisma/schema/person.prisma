@@ -1,23 +1,24 @@
 model Person {
-    id            String      @id
-    legalPerson   Boolean
-    document      String
-    name          String
-    city          String
-    state         String
-    cep           String
-    key           String      @unique
-    latitude      Float?
-    longitude     Float?
-    polygon       String
-    isHeadquarter Boolean
-    isOrigin      Boolean
-    isDestiny     Boolean
-    isCarrier     Boolean
-    isActive      Boolean     @default(true)
-    tags          PersonTag[]
-    createdAt     DateTime
-    updatedAt     DateTime?
-    deletedAt     DateTime?
-    Tag           Tag[]
+  id            String      @id
+  legalPerson   Boolean
+  document      String
+  name          String
+  city          String
+  state         String
+  cep           String
+  key           String      @unique
+  latitude      Float?
+  longitude     Float?
+  polygon       String
+  isHeadquarter Boolean
+  isOrigin      Boolean
+  isDestiny     Boolean
+  isCarrier     Boolean
+  isActive      Boolean     @default(true)
+  createdAt     DateTime
+  updatedAt     DateTime?
+  deletedAt     DateTime?
+  tags          PersonTag[]
+  Tag           Tag[]
+  truckSets     TruckSet[]
 }

@@ -1,8 +1,9 @@
 model TruckTractor {
-    id        String    @id
-    plate     String    @unique
-    isTruck   Boolean
-    isActive  Boolean
-    createdAt DateTime
-    updatedAt DateTime?
+  id        String     @id
+  plate     String     @unique
+  isTruck   Boolean
+  isActive  Boolean
+  createdAt DateTime
+  updatedAt DateTime?
+  truckSets TruckSet[]
 }

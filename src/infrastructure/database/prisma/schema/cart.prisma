@@ -1,7 +1,10 @@
 model Cart {
-    id        String    @id
-    plate     String    @unique
-    isActive  Boolean
-    createdAt DateTime
-    updatedAt DateTime?
+  id              String     @id
+  plate           String     @unique
+  isActive        Boolean
+  createdAt       DateTime
+  updatedAt       DateTime?
+  usedAsCartThree TruckSet[] @relation("CartThree")
+  usedAsCartTwo   TruckSet[] @relation("CartTwo")
+  usedAsCartOne   TruckSet[] @relation("CartOne")
 }

@@ -1,0 +1,20 @@
+model TruckSet {
+  id                 String       @id
+  status             String
+  dedicatedFleet     Boolean      @default(false)
+  isBlocked          Boolean      @default(false)
+  blockedDescription String?
+  createdAt          DateTime
+  truckTractorId     String
+  cartOneId          String
+  cartTwoId          String
+  cartThreeId        String
+  ownerId            String
+  updatedAt          DateTime?
+  deletedAt          DateTime?
+  owner              Person       @relation(fields: [ownerId], references: [id])
+  cartThree          Cart         @relation("CartThree", fields: [cartThreeId], references: [id])
+  cartTwo            Cart         @relation("CartTwo", fields: [cartTwoId], references: [id])
+  cartOne            Cart         @relation("CartOne", fields: [cartOneId], references: [id])
+  truckTractor       TruckTractor @relation(fields: [truckTractorId], references: [id])
+}

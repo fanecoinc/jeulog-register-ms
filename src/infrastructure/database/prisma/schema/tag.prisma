@@ -1,19 +1,19 @@
 model Tag {
-    id        String      @id
-    name      String      @unique
-    persons   PersonTag[]
-    createdAt DateTime
-    updatedAt DateTime?
-    deletedAt DateTime?
-    Person    Person?     @relation(fields: [personId], references: [id])
-    personId  String?
+  id        String      @id
+  name      String      @unique
+  createdAt DateTime
+  updatedAt DateTime?
+  deletedAt DateTime?
+  personId  String?
+  persons   PersonTag[]
+  Person    Person?     @relation(fields: [personId], references: [id])
 }
 
 model PersonTag {
-    personId String
-    tagId    String
-    tag      Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
-    person   Person @relation(fields: [personId], references: [id], onDelete: Cascade)
+  personId String
+  tagId    String
+  person   Person @relation(fields: [personId], references: [id], onDelete: Cascade)
+  tag      Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
 
-    @@id([personId, tagId])
+  @@id([personId, tagId])
 }
