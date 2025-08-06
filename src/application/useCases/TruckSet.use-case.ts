@@ -160,4 +160,17 @@ export class TruckSetUseCase {
     const truckSets = await this.truckSetRepository.getAll();
     return truckSets.map(toTruckSetResponseDTO);
   }
+
+  async deleteTruckSet(id: string): Promise<null> {
+    const truckSet = await this.truckSetRepository.findById(id);
+    if (!truckSet)
+      throw new Errors.MoleculerClientError(
+        'Registro não encontrado',
+        404,
+        'P2025'
+      );
+
+    await this.truckSetRepository.delete(truckSet.id);
+    return null;
+  }
 }
