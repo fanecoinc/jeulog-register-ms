@@ -12,15 +12,15 @@ export class TruckSet {
     public truckTractor: TruckTractor,
     public owner: Person,
     public createdAt: Date,
+    public truckTractorId: string,
+    public ownerId: string,
     public blockedDescription?: string,
     public cartOne?: Cart,
     public cartTwo?: Cart,
     public cartThree?: Cart,
-    public truckTractorId?: string,
     public cartOneId?: string,
     public cartTwoId?: string,
     public cartThreeId?: string,
-    public ownerId?: string,
     public updatedAt?: Date
   ) {}
 }

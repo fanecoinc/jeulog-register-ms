@@ -47,6 +47,8 @@ export class PrismaTruckSetRepository implements ITruckSetRepository {
         instance.owner.updatedAt ?? undefined
       ),
       instance.createdAt,
+      instance.truckTractorId,
+      instance.ownerId,
       instance.blockedDescription ?? undefined,
       instance.cartOne
         ? new Cart(
@@ -76,5 +78,71 @@ export class PrismaTruckSetRepository implements ITruckSetRepository {
           )
         : undefined
     );
+  }
+
+  async getAll(): Promise<TruckSet[]> {
+    const truckSets = await prismaClient.truckSet.findMany();
+    return truckSets.map(this.mapToTruckSetEntity);
+  }
+
+  async create(truckSet: TruckSet): Promise<TruckSet> {
+    const createdTruckSet = await prismaClient.truckSet.create({
+      data: {
+        id: truckSet.id,
+        status: truckSet.status,
+        dedicatedFleet: truckSet.dedicatedFleet,
+        isBlocked: truckSet.isBlocked,
+        blockedDescription: truckSet.blockedDescription ?? null,
+        truckTractorId: truckSet.truckTractorId,
+        cartOneId: truckSet.cartOneId ?? null,
+        cartTwoId: truckSet.cartTwoId ?? null,
+        cartThreeId: truckSet.cartThreeId ?? null,
+        ownerId: truckSet.ownerId,
+        createdAt: truckSet.createdAt,
+      },
+    });
+
+    return this.mapToTruckSetEntity(createdTruckSet);
+  }
+
+  async findById(id: string): Promise<TruckSet | null> {
+    const truckSet = await prismaClient.truckSet.findUnique({
+      where: { id },
+    });
+
+    if (!truckSet) {
+      return null;
+    }
+
+    return this.mapToTruckSetEntity(truckSet);
+  }
+
+  async update(id: string, truckSet: Partial<TruckSet>): Promise<TruckSet> {
+    const updatedTruckSet = await prismaClient.truckSet.update({
+      where: { id },
+      data: {
+        id: truckSet.id,
+        status: truckSet.status,
+        dedicatedFleet: truckSet.dedicatedFleet,
+        isBlocked: truckSet.isBlocked,
+        blockedDescription: truckSet.blockedDescription ?? null,
+        truckTractorId: truckSet.truckTractorId,
+        cartOneId: truckSet.cartOneId ?? null,
+        cartTwoId: truckSet.cartTwoId ?? null,
+        cartThreeId: truckSet.cartThreeId ?? null,
+        ownerId: truckSet.ownerId,
+        createdAt: truckSet.createdAt,
+      },
+    });
+
+    return this.mapToTruckSetEntity(updatedTruckSet);
+  }
+
+  async delete(id: string): Promise<null> {
+    await prismaClient.truckSet.delete({
+      where: { id },
+    });
+
+    return null;
   }
 }

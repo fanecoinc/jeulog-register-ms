@@ -1,6 +1,6 @@
 export enum TruckSetStatus {
-  REPAIR = 'Em manutenção',
-  ON_TRAVEL = 'Em viagem',
-  AVAILABLE = 'Disponível',
-  BLOCKED = 'Bloqueado',
+  REPAIR = 'REPAIR',
+  ON_TRAVEL = 'ON_TRAVEL',
+  AVAILABLE = 'AVAILABLE',
+  BLOCKED = 'BLOCKED',
 }

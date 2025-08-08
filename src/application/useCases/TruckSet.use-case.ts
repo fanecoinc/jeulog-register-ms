@@ -112,6 +112,8 @@ export class TruckSetUseCase {
       truckTractor,
       owner,
       new Date(),
+      dto.truckTractorId,
+      dto.ownerId,
       dto.blockedDescription,
       cartOne,
       cartTwo,
