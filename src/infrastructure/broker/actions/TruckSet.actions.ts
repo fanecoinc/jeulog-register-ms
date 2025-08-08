@@ -57,55 +57,54 @@ export const truckSetActions = {
       cartThreeId: { type: 'string', format: 'uuid', optional: true },
       ownerId: { type: 'string', format: 'uuid', optional: true },
     },
-
-    getTruckSetById: {
-      handler: async (ctx: Context<StandardParameter<CreateTruckSetDTO>>) => {
-        const { id } = ctx.params;
-        await uuidSchema.parseAsync(id).catch(errorHandler);
-        return await truckSetService.getTruckSetById(id).catch(errorHandler);
-      },
-      openapi: {
-        description: 'Recupera conjunto pelo ID',
-        summary: 'Recupera conjunto pelo ID',
-      },
+  },
+  getTruckSetById: {
+    handler: async (ctx: Context<StandardParameter<CreateTruckSetDTO>>) => {
+      const { id } = ctx.params;
+      await uuidSchema.parseAsync(id).catch(errorHandler);
+      return await truckSetService.getTruckSetById(id).catch(errorHandler);
     },
+    openapi: {
+      description: 'Recupera conjunto pelo ID',
+      summary: 'Recupera conjunto pelo ID',
+    },
+  },
 
-    editTruckSet: {
-      handler: async (ctx: Context<StandardParameter<CreateTruckSetDTO>>) => {
-        const { id, ...dto } = ctx.params;
-        await uuidSchema.parseAsync(id).catch(errorHandler);
-        await truckSetEditSchema.parseAsync(dto).catch(errorHandler);
-        return await truckSetService.editTruckSet(id, dto).catch(errorHandler);
-      },
-      openapi: {
-        description: 'Edição de conjunto',
-        summary: 'Edição de conjunto',
-      },
+  editTruckSet: {
+    handler: async (ctx: Context<StandardParameter<CreateTruckSetDTO>>) => {
+      const { id, ...dto } = ctx.params;
+      await uuidSchema.parseAsync(id).catch(errorHandler);
+      await truckSetEditSchema.parseAsync(dto).catch(errorHandler);
+      return await truckSetService.editTruckSet(id, dto).catch(errorHandler);
+    },
+    openapi: {
+      description: 'Edição de conjunto',
+      summary: 'Edição de conjunto',
+    },
+    params: {
+      status: { type: 'string', optional: true },
+      dedicatedFleet: { type: 'boolean', optional: true },
+      isBlocked: { type: 'boolean', optional: true },
+      blockedDescription: { type: 'string', optional: true },
+      truckTractorId: { type: 'string', format: 'uuid', optional: false },
+      cartOneId: { type: 'string', format: 'uuid', optional: true },
+      cartTwoId: { type: 'string', format: 'uuid', optional: true },
+      cartThreeId: { type: 'string', format: 'uuid', optional: true },
+      ownerId: { type: 'string', format: 'uuid', optional: true },
+    },
+  },
+
+  deleteTruckSet: {
+    handler: async (ctx: Context<StandardParameter<CreateTruckSetDTO>>) => {
+      const { id } = ctx.params;
+      await uuidSchema.parseAsync(id).catch(errorHandler);
+      return await truckSetService.deleteTruckSet(id).catch(errorHandler);
+    },
+    openapi: {
+      description: 'Exclusão de conjunto',
+      summary: 'Exclusão de conjunto',
       params: {
-        status: { type: 'string', optional: true },
-        dedicatedFleet: { type: 'boolean', optional: true },
-        isBlocked: { type: 'boolean', optional: true },
-        blockedDescription: { type: 'string', optional: true },
-        truckTractorId: { type: 'string', format: 'uuid', optional: false },
-        cartOneId: { type: 'string', format: 'uuid', optional: true },
-        cartTwoId: { type: 'string', format: 'uuid', optional: true },
-        cartThreeId: { type: 'string', format: 'uuid', optional: true },
-        ownerId: { type: 'string', format: 'uuid', optional: true },
-      },
-    },
-
-    deleteTruckSet: {
-      handler: async (ctx: Context<StandardParameter<CreateTruckSetDTO>>) => {
-        const { id } = ctx.params;
-        await uuidSchema.parseAsync(id).catch(errorHandler);
-        return await truckSetService.deleteTruckSet(id).catch(errorHandler);
-      },
-      openapi: {
-        description: 'Exclusão de conjunto',
-        summary: 'Exclusão de conjunto',
-        params: {
-          id: { type: 'string', format: 'uuid', optional: false },
-        },
+        id: { type: 'string', format: 'uuid', optional: false },
       },
     },
   },
