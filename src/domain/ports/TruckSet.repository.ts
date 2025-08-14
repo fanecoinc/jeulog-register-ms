@@ -6,4 +6,6 @@ export interface ITruckSetRepository {
   findById(id: string): Promise<TruckSet | null>;
   update(id: string, truckSet: Partial<TruckSet>): Promise<TruckSet>;
   delete(id: string): Promise<null>;
+  findByTruckTractorId(truckTractorId: string): Promise<TruckSet | null>;
+  findByCartId(cartId: string): Promise<TruckSet | null>;
 }

@@ -92,6 +92,10 @@ export class TruckSetUseCase {
         );
     });
 
+    // TODO Verifica se o cavalo mecânico já está associado a outro conjunto
+
+    // TODO Verifica se as carretas já estão associadas a outro conjunto usando
+
     return {
       truckTractor: truckTractor,
       owner: person,

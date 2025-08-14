@@ -142,4 +142,34 @@ export class PrismaTruckSetRepository implements ITruckSetRepository {
 
     return null;
   }
+
+  async findByTruckTractorId(truckTractorId: string): Promise<TruckSet | null> {
+    const truckSet = await prismaClient.truckSet.findFirst({
+      where: { truckTractorId },
+    });
+
+    if (!truckSet) {
+      return null;
+    }
+
+    return this.mapToTruckSetEntity(truckSet);
+  }
+
+  async findByCartId(cartId: string): Promise<TruckSet | null> {
+    const truckSet = await prismaClient.truckSet.findFirst({
+      where: {
+        OR: [
+          { cartOneId: cartId },
+          { cartTwoId: cartId },
+          { cartThreeId: cartId },
+        ],
+      },
+    });
+
+    if (!truckSet) {
+      return null;
+    }
+
+    return this.mapToTruckSetEntity(truckSet);
+  }
 }

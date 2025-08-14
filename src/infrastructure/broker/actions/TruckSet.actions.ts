@@ -48,7 +48,6 @@ export const truckSetActions = {
     },
     params: {
       dedicatedFleet: { type: 'boolean', optional: false },
-      isBlocked: { type: 'boolean', optional: false },
       blockedDescription: { type: 'string', optional: true },
       truckTractorId: { type: 'string', format: 'uuid', optional: false },
       cartOneId: { type: 'string', format: 'uuid', optional: true },
@@ -83,7 +82,6 @@ export const truckSetActions = {
     params: {
       status: { type: 'string', optional: true },
       dedicatedFleet: { type: 'boolean', optional: true },
-      isBlocked: { type: 'boolean', optional: true },
       blockedDescription: { type: 'string', optional: true },
       truckTractorId: { type: 'string', format: 'uuid', optional: false },
       cartOneId: { type: 'string', format: 'uuid', optional: true },

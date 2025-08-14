@@ -3,7 +3,6 @@ import { TruckSetStatus } from '@/domain/enums/TruckSetStatus';
 
 const truckSetCreationSchema = z.object({
   dedicatedFleet: z.boolean(),
-  isBlocked: z.boolean(),
   blockedDescription: z.string().optional(),
   truckTractorId: z.string().uuid('UUID Inválido'),
   cartOneId: z.string().uuid('UUID Inválido').optional(),
@@ -15,7 +14,6 @@ const truckSetCreationSchema = z.object({
 const truckSetEditSchema = z.object({
   status: z.nativeEnum(TruckSetStatus).optional(),
   dedicatedFleet: z.boolean().optional(),
-  isBlocked: z.boolean().optional(),
   blockedDescription: z.string().optional(),
   truckTractorId: z.string().uuid('UUID Inválido'),
   cartOneId: z.string().uuid('UUID Inválido').optional(),
