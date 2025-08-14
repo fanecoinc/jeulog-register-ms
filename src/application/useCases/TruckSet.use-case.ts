@@ -109,7 +109,6 @@ export class TruckSetUseCase {
       uuidv4(),
       TruckSetStatus.AVAILABLE,
       dto.dedicatedFleet,
-      dto.isBlocked,
       truckTractor,
       owner,
       new Date(),

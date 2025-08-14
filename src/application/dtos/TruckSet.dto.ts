@@ -3,7 +3,6 @@ import { TruckSetStatus } from '@/domain/enums/TruckSetStatus';
 
 export interface CreateTruckSetDTO {
   dedicatedFleet: boolean;
-  isBlocked: boolean;
   blockedDescription?: string;
   truckTractorId: string;
   ownerId: string;
@@ -15,7 +14,6 @@ export interface CreateTruckSetDTO {
 export interface UpdateTruckSetDTO {
   status?: TruckSetStatus;
   dedicatedFleet?: boolean;
-  isBlocked?: boolean;
   blockedDescription?: string;
   truckTractorId?: string;
   ownerId?: string;
@@ -28,7 +26,6 @@ export interface TruckSetResponseDTO {
   id: string;
   status: TruckSetStatus;
   dedicatedFleet: boolean;
-  isBlocked: boolean;
   blockedDescription?: string;
   truckTractor: {
     id: string;
@@ -57,7 +54,6 @@ export function toTruckSetResponseDTO(truckSet: TruckSet): TruckSetResponseDTO {
     id: truckSet.id,
     status: truckSet.status,
     dedicatedFleet: truckSet.dedicatedFleet,
-    isBlocked: truckSet.isBlocked,
     blockedDescription: truckSet.blockedDescription,
     truckTractor: {
       id: truckSet.truckTractor.id,

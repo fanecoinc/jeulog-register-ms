@@ -12,7 +12,6 @@ export class PrismaTruckSetRepository implements ITruckSetRepository {
       instance.id,
       instance.status,
       instance.dedicatedFleet,
-      instance.isBlocked,
       new TruckTractor(
         instance.truckTractor.id,
         instance.truckTractor.plate,
@@ -91,7 +90,6 @@ export class PrismaTruckSetRepository implements ITruckSetRepository {
         id: truckSet.id,
         status: truckSet.status,
         dedicatedFleet: truckSet.dedicatedFleet,
-        isBlocked: truckSet.isBlocked,
         blockedDescription: truckSet.blockedDescription ?? null,
         truckTractorId: truckSet.truckTractorId,
         cartOneId: truckSet.cartOneId ?? null,
@@ -124,7 +122,6 @@ export class PrismaTruckSetRepository implements ITruckSetRepository {
         id: truckSet.id,
         status: truckSet.status,
         dedicatedFleet: truckSet.dedicatedFleet,
-        isBlocked: truckSet.isBlocked,
         blockedDescription: truckSet.blockedDescription ?? null,
         truckTractorId: truckSet.truckTractorId,
         cartOneId: truckSet.cartOneId ?? null,

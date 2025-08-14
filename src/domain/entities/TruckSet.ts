@@ -8,7 +8,6 @@ export class TruckSet {
     public readonly id: string,
     public status: TruckSetStatus,
     public dedicatedFleet: boolean,
-    public isBlocked: boolean,
     public truckTractor: TruckTractor,
     public owner: Person,
     public createdAt: Date,
