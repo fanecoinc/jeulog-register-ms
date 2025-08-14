@@ -47,7 +47,6 @@ export const truckSetActions = {
       summary: 'Criação de conjunto',
     },
     params: {
-      status: { type: 'string', optional: false },
       dedicatedFleet: { type: 'boolean', optional: false },
       isBlocked: { type: 'boolean', optional: false },
       blockedDescription: { type: 'string', optional: true },

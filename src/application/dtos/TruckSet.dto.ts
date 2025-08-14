@@ -2,7 +2,6 @@ import { TruckSet } from '@/domain/entities/TruckSet';
 import { TruckSetStatus } from '@/domain/enums/TruckSetStatus';
 
 export interface CreateTruckSetDTO {
-  status: TruckSetStatus;
   dedicatedFleet: boolean;
   isBlocked: boolean;
   blockedDescription?: string;

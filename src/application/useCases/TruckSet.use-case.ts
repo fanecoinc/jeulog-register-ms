@@ -11,6 +11,7 @@ import {
 import { TruckSet } from '@/domain/entities/TruckSet';
 import { v4 as uuidv4 } from 'uuid';
 import { Errors } from 'moleculer';
+import { TruckSetStatus } from '@/domain/enums/TruckSetStatus';
 
 export class TruckSetUseCase {
   constructor(
@@ -106,7 +107,7 @@ export class TruckSetUseCase {
 
     const truckSet = new TruckSet(
       uuidv4(),
-      dto.status,
+      TruckSetStatus.AVAILABLE,
       dto.dedicatedFleet,
       dto.isBlocked,
       truckTractor,

@@ -2,7 +2,6 @@ import { z } from 'zod';
 import { TruckSetStatus } from '@/domain/enums/TruckSetStatus';
 
 const truckSetCreationSchema = z.object({
-  status: z.nativeEnum(TruckSetStatus),
   dedicatedFleet: z.boolean(),
   isBlocked: z.boolean(),
   blockedDescription: z.string().optional(),
