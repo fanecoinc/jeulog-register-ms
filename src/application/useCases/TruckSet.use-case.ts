@@ -22,7 +22,8 @@ export class TruckSetUseCase {
   ) {}
 
   private async dtoInternalValidation(
-    dto: CreateTruckSetDTO | UpdateTruckSetDTO
+    dto: CreateTruckSetDTO | UpdateTruckSetDTO,
+    truckSetId?: string
   ): Promise<Record<string, any>> {
     const [person, truckTractor, cartOne, cartTwo, cartThree] =
       await Promise.all([
@@ -34,7 +35,6 @@ export class TruckSetUseCase {
         dto.cartTwoId ? this.cartRepository.findById(dto.cartTwoId) : null,
         dto.cartThreeId ? this.cartRepository.findById(dto.cartThreeId) : null,
       ]);
-
     // Validação do proprietário
     if (!person)
       throw new Errors.MoleculerClientError(
@@ -62,7 +62,6 @@ export class TruckSetUseCase {
         400,
         'ValidationError'
       );
-
     if (
       truckTractor.isTruck &&
       (dto.cartOneId || dto.cartTwoId || dto.cartThreeId)
@@ -73,7 +72,6 @@ export class TruckSetUseCase {
         'ValidationError'
       );
     }
-
     // Validação das carretas (se existirem)
     [cartOne, cartTwo, cartThree].forEach((cart, index) => {
       if (cart === null) return;
@@ -91,10 +89,69 @@ export class TruckSetUseCase {
           'ValidationError'
         );
     });
+    // Verifica se o cavalo mecânico já está associado a outro conjunto
+    if (truckSetId) {
+      const existingTruckSet =
+        await this.truckSetRepository.findByTruckTractorId(truckTractor.id);
+      if (existingTruckSet && existingTruckSet.id !== truckSetId) {
+        throw new Errors.MoleculerClientError(
+          'Cavalo mecânico já está associado a outro conjunto',
+          400,
+          'ValidationError'
+        );
+      }
+    } else {
+      const existingTruckSet =
+        await this.truckSetRepository.findByTruckTractorId(truckTractor.id);
+      if (existingTruckSet) {
+        throw new Errors.MoleculerClientError(
+          'Cavalo mecânico já está associado a outro conjunto',
+          400,
+          'ValidationError'
+        );
+      }
+    }
 
-    // TODO Verifica se o cavalo mecânico já está associado a outro conjunto
-
-    // TODO Verifica se as carretas já estão associadas a outro conjunto usando
+    // Verifica se as carretas já estão associadas a outro conjunto usando
+    if (truckSetId) {
+      const existingCartOne = cartOne
+        ? await this.truckSetRepository.findByCartId(cartOne.id)
+        : null;
+      const existingCartTwo = cartTwo
+        ? await this.truckSetRepository.findByCartId(cartTwo.id)
+        : null;
+      const existingCartThree = cartThree
+        ? await this.truckSetRepository.findByCartId(cartThree.id)
+        : null;
+      if (
+        (existingCartOne && existingCartOne.id !== truckSetId) ||
+        (existingCartTwo && existingCartTwo.id !== truckSetId) ||
+        (existingCartThree && existingCartThree.id !== truckSetId)
+      ) {
+        throw new Errors.MoleculerClientError(
+          'Uma ou mais carretas já estão associadas a outro conjunto',
+          400,
+          'ValidationError'
+        );
+      }
+    } else {
+      const existingCartOne = cartOne
+        ? await this.truckSetRepository.findByCartId(cartOne.id)
+        : null;
+      const existingCartTwo = cartTwo
+        ? await this.truckSetRepository.findByCartId(cartTwo.id)
+        : null;
+      const existingCartThree = cartThree
+        ? await this.truckSetRepository.findByCartId(cartThree.id)
+        : null;
+      if (existingCartOne || existingCartTwo || existingCartThree) {
+        throw new Errors.MoleculerClientError(
+          'Uma ou mais carretas já estão associadas a outro conjunto',
+          400,
+          'ValidationError'
+        );
+      }
+    }
 
     return {
       truckTractor: truckTractor,
@@ -141,7 +198,7 @@ export class TruckSetUseCase {
         'P2025'
       );
 
-    await this.dtoInternalValidation(dto);
+    await this.dtoInternalValidation(dto, truckSet.id);
 
     const updatedTruckSet = await this.truckSetRepository.update(truckSet.id, {
       ...dto,

@@ -8,6 +8,7 @@ import { Tag } from '@/domain/entities/Tag';
 
 export class PrismaTruckSetRepository implements ITruckSetRepository {
   private mapToTruckSetEntity(instance: Record<string, any>): TruckSet {
+    console.log(instance);
     return new TruckSet(
       instance.id,
       instance.status,
@@ -80,7 +81,23 @@ export class PrismaTruckSetRepository implements ITruckSetRepository {
   }
 
   async getAll(): Promise<TruckSet[]> {
-    const truckSets = await prismaClient.truckSet.findMany();
+    const truckSets = await prismaClient.truckSet.findMany({
+      include: {
+        truckTractor: true,
+        owner: {
+          include: {
+            tags: {
+              include: {
+                tag: true,
+              },
+            },
+          },
+        },
+        cartOne: true,
+        cartTwo: true,
+        cartThree: true,
+      },
+    });
     return truckSets.map(this.mapToTruckSetEntity);
   }
 
@@ -98,6 +115,21 @@ export class PrismaTruckSetRepository implements ITruckSetRepository {
         ownerId: truckSet.ownerId,
         createdAt: truckSet.createdAt,
       },
+      include: {
+        truckTractor: true,
+        owner: {
+          include: {
+            tags: {
+              include: {
+                tag: true,
+              },
+            },
+          },
+        },
+        cartOne: true,
+        cartTwo: true,
+        cartThree: true,
+      },
     });
 
     return this.mapToTruckSetEntity(createdTruckSet);
@@ -106,6 +138,21 @@ export class PrismaTruckSetRepository implements ITruckSetRepository {
   async findById(id: string): Promise<TruckSet | null> {
     const truckSet = await prismaClient.truckSet.findUnique({
       where: { id },
+      include: {
+        truckTractor: true,
+        owner: {
+          include: {
+            tags: {
+              include: {
+                tag: true,
+              },
+            },
+          },
+        },
+        cartOne: true,
+        cartTwo: true,
+        cartThree: true,
+      },
     });
 
     if (!truckSet) {
@@ -130,6 +177,21 @@ export class PrismaTruckSetRepository implements ITruckSetRepository {
         ownerId: truckSet.ownerId,
         createdAt: truckSet.createdAt,
       },
+      include: {
+        truckTractor: true,
+        owner: {
+          include: {
+            tags: {
+              include: {
+                tag: true,
+              },
+            },
+          },
+        },
+        cartOne: true,
+        cartTwo: true,
+        cartThree: true,
+      },
     });
 
     return this.mapToTruckSetEntity(updatedTruckSet);
@@ -146,6 +208,21 @@ export class PrismaTruckSetRepository implements ITruckSetRepository {
   async findByTruckTractorId(truckTractorId: string): Promise<TruckSet | null> {
     const truckSet = await prismaClient.truckSet.findFirst({
       where: { truckTractorId },
+      include: {
+        truckTractor: true,
+        owner: {
+          include: {
+            tags: {
+              include: {
+                tag: true,
+              },
+            },
+          },
+        },
+        cartOne: true,
+        cartTwo: true,
+        cartThree: true,
+      },
     });
 
     if (!truckSet) {
@@ -163,6 +240,21 @@ export class PrismaTruckSetRepository implements ITruckSetRepository {
           { cartTwoId: cartId },
           { cartThreeId: cartId },
         ],
+      },
+      include: {
+        truckTractor: true,
+        owner: {
+          include: {
+            tags: {
+              include: {
+                tag: true,
+              },
+            },
+          },
+        },
+        cartOne: true,
+        cartTwo: true,
+        cartThree: true,
       },
     });
 
