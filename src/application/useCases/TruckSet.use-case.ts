@@ -162,6 +162,7 @@ export class TruckSetUseCase {
     };
   }
 
+  // TODO: bug para aceitar carts
   async createTruckSet(dto: CreateTruckSetDTO): Promise<TruckSetResponseDTO> {
     const { truckTractor, owner, cartOne, cartTwo, cartThree } =
       await this.dtoInternalValidation(dto);

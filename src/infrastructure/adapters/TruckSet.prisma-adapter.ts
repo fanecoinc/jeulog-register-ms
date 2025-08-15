@@ -8,7 +8,6 @@ import { Tag } from '@/domain/entities/Tag';
 
 export class PrismaTruckSetRepository implements ITruckSetRepository {
   private mapToTruckSetEntity(instance: Record<string, any>): TruckSet {
-    console.log(instance);
     return new TruckSet(
       instance.id,
       instance.status,
