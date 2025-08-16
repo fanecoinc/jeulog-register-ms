@@ -62,28 +62,6 @@ export class TruckSetUseCase {
         400,
         'ValidationError'
       );
-    if (
-      truckTractor.isTruck &&
-      (dto.cartOneId || dto.cartTwoId || dto.cartThreeId)
-    ) {
-      throw new Errors.MoleculerClientError(
-        'O Cavalo selecionado é do tipo "Truck" e não deve conter carretas',
-        400,
-        'ValidationError'
-      );
-    }
-    if (
-      !truckTractor.isTruck &&
-      !dto.cartOneId &&
-      !dto.cartTwoId &&
-      !dto.cartThreeId
-    ) {
-      throw new Errors.MoleculerClientError(
-        'O Cavalo selecionado não é do tipo "Truck" e deve conter pelo menos uma carreta',
-        400,
-        'ValidationError'
-      );
-    }
 
     // Validação das carretas (se existirem)
     [cartOne, cartTwo, cartThree].forEach((cart, index) => {

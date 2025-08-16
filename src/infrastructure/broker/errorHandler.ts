@@ -1,6 +1,7 @@
 import { Errors } from 'moleculer';
 import { Prisma } from '@prisma/client';
 import { ZodError } from 'zod';
+import { DomainValidationError } from '../exceptions/DomainValidationError';
 
 export function errorHandler(err: Error): never {
   if (err instanceof Prisma.PrismaClientValidationError) {
@@ -10,6 +11,12 @@ export function errorHandler(err: Error): never {
       'PRISMA_VALIDATION_ERROR',
       { cause: err }
     );
+  }
+
+  if (err instanceof DomainValidationError) {
+    throw new Errors.MoleculerClientError(err.message, 400, err.code, {
+      cause: err,
+    });
   }
 
   if (err instanceof Prisma.PrismaClientKnownRequestError) {
