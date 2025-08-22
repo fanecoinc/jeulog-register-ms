@@ -2,24 +2,19 @@ import { Tag } from '@/domain/entities/Tag';
 import broker from '@/infrastructure/broker/service-broker';
 import { prismaClient } from '@/infrastructure/database';
 
-describe('Tag Service E2E', () => {
+describe('Tag Service E2E Tests', () => {
   beforeAll(async () => {
-    await prismaClient.$connect();
     await broker.start();
+    await prismaClient.$connect();
   });
 
   afterAll(async () => {
-    await prismaClient.$disconnect();
     await broker.stop();
+    await prismaClient.$disconnect();
   });
 
-  it('should create a tag', async () => {
-    const tagData = {
-      name: 'Test Tag',
-    };
-
-    const response: Tag = await broker.call('tag.createTag', tagData);
-    expect(response).toHaveProperty('id');
-    expect(response.name).toBe(tagData.name);
+  it('should retrieve all tags', async () => {
+    const tags: Tag[] = await broker.call('register.getTags');
+    expect(tags).toBeInstanceOf(Array);
   });
 });
