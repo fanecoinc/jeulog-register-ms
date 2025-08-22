@@ -70,7 +70,7 @@ export const tagActions = {
     handler: async (ctx: Context<StandardParameter<CreateTagDTO>>) => {
       const { id } = ctx.params;
       await uuidSchema.parseAsync(id).catch(errorHandler);
-      return await tagService.delete(id);
+      return await tagService.delete(id).catch(errorHandler);
     },
     openapi: {
       description: 'Deleção de tag',

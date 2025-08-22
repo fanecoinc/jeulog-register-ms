@@ -45,7 +45,7 @@ export class TruckSetService {
     return await this.truckSetUseCase.updateTruckSet(id, dto);
   }
 
-  async deleteTruckSet(id: string): Promise<null> {
+  async deleteTruckSet(id: string): Promise<void> {
     return await this.truckSetUseCase.deleteTruckSet(id);
   }
 }

@@ -15,7 +15,7 @@ const truckSetEditSchema = z.object({
   status: z.nativeEnum(TruckSetStatus).optional(),
   dedicatedFleet: z.boolean().optional(),
   blockedDescription: z.string().optional(),
-  truckTractorId: z.string().uuid('UUID Inválido'),
+  truckTractorId: z.string().uuid('UUID Inválido').optional(),
   cartOneId: z.string().uuid('UUID Inválido').optional(),
   cartTwoId: z.string().uuid('UUID Inválido').optional(),
   cartThreeId: z.string().uuid('UUID Inválido').optional(),

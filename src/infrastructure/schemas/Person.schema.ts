@@ -20,6 +20,8 @@ const personCreationSchema = z
     isCarrier: z.boolean(),
     isActive: z.boolean().optional(),
     tagIds: z.array(z.string().uuid('UUID inválido')).optional(),
+    latitude: z.number().optional(),
+    longitutde: z.number().optional(),
   })
   .strict('Campo desconhecido');
 
@@ -44,6 +46,8 @@ const personEditSchema = z
     isCarrier: z.boolean().optional(),
     isActive: z.boolean().optional(),
     tagIds: z.array(z.string().uuid('UUID inválido')).optional(),
+    latitude: z.number().optional(),
+    longitutde: z.number().optional(),
   })
   .strict('Campo desconhecido');
 

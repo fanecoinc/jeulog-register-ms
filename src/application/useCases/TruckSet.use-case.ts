@@ -36,13 +36,15 @@ export class TruckSetUseCase {
         dto.cartThreeId ? this.cartRepository.findById(dto.cartThreeId) : null,
       ]);
     // Validação do proprietário
-    if (!person)
+    if (!person && dto.ownerId) {
       throw new Errors.MoleculerClientError(
-        'Registro não encontrado',
+        'Proprietário não encontrado',
         404,
         'P2025'
       );
-    if (!person.isCarrier)
+    }
+
+    if (!person?.isCarrier && dto.ownerId)
       throw new Errors.MoleculerClientError(
         'Proprietário do conjunto deve ser uma transportadora',
         400,
@@ -50,15 +52,15 @@ export class TruckSetUseCase {
       );
 
     // Validação do cavalo mecânico (TruckTractor)
-    if (!truckTractor)
+    if (!truckTractor && dto.truckTractorId)
       throw new Errors.MoleculerClientError(
-        'Registro não encontrado',
+        'Cavalo mecânico não encontrado',
         404,
         'P2025'
       );
-    if (!truckTractor.isActive)
+    if (!truckTractor?.isActive && dto.truckTractorId)
       throw new Errors.MoleculerClientError(
-        'Cavalo inativo',
+        'Cavalo mecânico inativo',
         400,
         'ValidationError'
       );
@@ -81,7 +83,7 @@ export class TruckSetUseCase {
         );
     });
     // Verifica se o cavalo mecânico já está associado a outro conjunto
-    if (truckSetId) {
+    if (truckSetId && truckTractor) {
       const existingTruckSet =
         await this.truckSetRepository.findByTruckTractorId(truckTractor.id);
       if (existingTruckSet && existingTruckSet.id !== truckSetId) {
@@ -91,7 +93,7 @@ export class TruckSetUseCase {
           'ValidationError'
         );
       }
-    } else {
+    } else if (truckTractor) {
       const existingTruckSet =
         await this.truckSetRepository.findByTruckTractorId(truckTractor.id);
       if (existingTruckSet) {
@@ -153,7 +155,6 @@ export class TruckSetUseCase {
     };
   }
 
-  // TODO: bug para aceitar carts
   async createTruckSet(dto: CreateTruckSetDTO): Promise<TruckSetResponseDTO> {
     const { truckTractor, owner, cartOne, cartTwo, cartThree } =
       await this.dtoInternalValidation(dto);
@@ -216,7 +217,7 @@ export class TruckSetUseCase {
     return truckSets.map(toTruckSetResponseDTO);
   }
 
-  async deleteTruckSet(id: string): Promise<null> {
+  async deleteTruckSet(id: string): Promise<void> {
     const truckSet = await this.truckSetRepository.findById(id);
     if (!truckSet)
       throw new Errors.MoleculerClientError(
@@ -226,6 +227,6 @@ export class TruckSetUseCase {
       );
 
     await this.truckSetRepository.delete(truckSet.id);
-    return null;
+    return;
   }
 }

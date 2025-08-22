@@ -5,6 +5,8 @@ import { Person } from '@/domain/entities/Person';
 import { Cart } from '@/domain/entities/Cart';
 import { TruckTractor } from '@/domain/entities/TruckTractor';
 import { Tag } from '@/domain/entities/Tag';
+import { Errors } from 'moleculer';
+import { TruckSetStatus } from '@/domain/enums/TruckSetStatus';
 
 export class PrismaTruckSetRepository implements ITruckSetRepository {
   private mapToTruckSetEntity(instance: Record<string, any>): TruckSet {
@@ -162,19 +164,36 @@ export class PrismaTruckSetRepository implements ITruckSetRepository {
   }
 
   async update(id: string, truckSet: Partial<TruckSet>): Promise<TruckSet> {
+    const existingTruckSet = await this.findById(id);
+
+    if (!existingTruckSet)
+      throw new Errors.MoleculerClientError(
+        'Registro não encontrado',
+        404,
+        'P2025'
+      );
+
     const updatedTruckSet = await prismaClient.truckSet.update({
       where: { id },
       data: {
-        id: truckSet.id,
-        status: truckSet.status,
-        dedicatedFleet: truckSet.dedicatedFleet,
-        blockedDescription: truckSet.blockedDescription ?? null,
-        truckTractorId: truckSet.truckTractorId,
-        cartOneId: truckSet.cartOne?.id ?? null,
-        cartTwoId: truckSet.cartTwo?.id ?? null,
-        cartThreeId: truckSet.cartThree?.id ?? null,
-        ownerId: truckSet.ownerId,
-        createdAt: truckSet.createdAt,
+        status:
+          truckSet.status ??
+          existingTruckSet.status ??
+          TruckSetStatus.AVAILABLE,
+        dedicatedFleet:
+          truckSet.dedicatedFleet ?? existingTruckSet.dedicatedFleet ?? false,
+        blockedDescription:
+          truckSet.blockedDescription ??
+          existingTruckSet.blockedDescription ??
+          null,
+        truckTractorId:
+          truckSet.truckTractorId ?? existingTruckSet.truckTractorId,
+        cartOneId: truckSet.cartOne?.id ?? existingTruckSet.cartOne?.id ?? null,
+        cartTwoId: truckSet.cartTwo?.id ?? existingTruckSet.cartTwo?.id ?? null,
+        cartThreeId:
+          truckSet.cartThree?.id ?? existingTruckSet.cartThree?.id ?? null,
+        ownerId: truckSet.ownerId ?? existingTruckSet.ownerId,
+        createdAt: truckSet.createdAt ?? existingTruckSet.createdAt,
       },
       include: {
         truckTractor: true,
@@ -196,12 +215,12 @@ export class PrismaTruckSetRepository implements ITruckSetRepository {
     return this.mapToTruckSetEntity(updatedTruckSet);
   }
 
-  async delete(id: string): Promise<null> {
+  async delete(id: string): Promise<void> {
     await prismaClient.truckSet.delete({
       where: { id },
     });
 
-    return null;
+    return;
   }
 
   async findByTruckTractorId(truckTractorId: string): Promise<TruckSet | null> {
