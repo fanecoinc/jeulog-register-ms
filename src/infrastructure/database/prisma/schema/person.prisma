@@ -9,7 +9,7 @@ model Person {
   key           String      @unique
   latitude      Float?
   longitude     Float?
-  polygon       String
+  polygon       String?
   isHeadquarter Boolean
   isOrigin      Boolean
   isDestiny     Boolean

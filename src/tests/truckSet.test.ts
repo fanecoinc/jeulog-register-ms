@@ -30,8 +30,6 @@ describe('TruckSet Service E2E Tests', () => {
       city: 'Edit City',
       state: 'EC',
       cep: '55566-778',
-      polygon:
-        'POLYGON((-43.75 -19.75, -43.70 -19.77, -43.68 -19.72, -43.72 -19.68, -43.77 -19.70, -43.75 -19.75))',
       isHeadquarter: false,
       isOrigin: false,
       isDestiny: false,

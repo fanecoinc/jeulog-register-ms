@@ -43,7 +43,6 @@ export class PersonUseCase {
       dto.state,
       dto.cep,
       `${dto.name} - ${dto.document}`,
-      dto.polygon,
       dto.isHeadquarter,
       dto.isOrigin,
       dto.isDestiny,
@@ -51,6 +50,7 @@ export class PersonUseCase {
       dto.isActive ?? true,
       tags,
       new Date(),
+      dto.polygon ?? undefined,
       dto.latitude,
       dto.longitude
     );

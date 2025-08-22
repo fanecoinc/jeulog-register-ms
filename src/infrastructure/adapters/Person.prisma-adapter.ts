@@ -14,7 +14,6 @@ export class PrismaPersonRepository implements IPersonRepository {
       instance.state,
       instance.cep,
       instance.key,
-      instance.polygon,
       instance.isHeadquarter,
       instance.isOrigin,
       instance.isDestiny,
@@ -26,6 +25,7 @@ export class PrismaPersonRepository implements IPersonRepository {
           })
         : [],
       instance.createdAt,
+      instance.polygon ?? undefined,
       instance.latitude ?? undefined,
       instance.longitude ?? undefined,
       instance.updatedAt

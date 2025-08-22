@@ -12,8 +12,8 @@ model Tag {
 model PersonTag {
   personId String
   tagId    String
-  person   Person @relation(fields: [personId], references: [id], onDelete: Cascade)
   tag      Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  person   Person @relation(fields: [personId], references: [id], onDelete: Cascade)
 
   @@id([personId, tagId])
 }

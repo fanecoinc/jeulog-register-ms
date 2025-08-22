@@ -9,7 +9,7 @@ export interface CreatePersonDTO {
   cep: string;
   latitude?: number;
   longitude?: number;
-  polygon: string;
+  polygon?: string;
   isHeadquarter: boolean;
   isOrigin: boolean;
   isDestiny: boolean;
@@ -46,7 +46,7 @@ export interface PersonResponseDTO {
   cep: string;
   latitude?: number;
   longitude?: number;
-  polygon: string;
+  polygon?: string;
   isHeadquarter: boolean;
   isOrigin: boolean;
   isDestiny: boolean;

@@ -13,7 +13,8 @@ const personCreationSchema = z
       .regex(
         /^POLYGON\(\(\s*(-?\d+(\.\d+)?\s+-?\d+(\.\d+)?\s*,\s*){2,}-?\d+(\.\d+)?\s+-?\d+(\.\d+)?\s*\)\)$/,
         'Formato de POLYGON inválido'
-      ),
+      )
+      .optional(),
     isHeadquarter: z.boolean(),
     isOrigin: z.boolean(),
     isDestiny: z.boolean(),

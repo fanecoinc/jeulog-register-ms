@@ -37,7 +37,7 @@ export interface TruckSetResponseDTO {
   owner: {
     id: string;
     name: string;
-    polygon: string;
+    polygon?: string;
     isCarrier: boolean;
     isHeadquarter: boolean;
     createdAt: Date;
@@ -65,7 +65,7 @@ export function toTruckSetResponseDTO(truckSet: TruckSet): TruckSetResponseDTO {
     owner: {
       id: truckSet.owner.id,
       name: truckSet.owner.name,
-      polygon: truckSet.owner.polygon,
+      polygon: truckSet.owner.polygon ?? undefined,
       isCarrier: truckSet.owner.isCarrier,
       isHeadquarter: truckSet.owner.isHeadquarter,
       createdAt: truckSet.owner.createdAt,

@@ -1,14 +1,7 @@
-enum TruckSetStatus {
-  REPAIR
-  ON_TRAVEL
-  AVAILABLE
-  BLOCKED
-}
-
 model TruckSet {
-  id                 String         @id
-  status             TruckSetStatus @default(AVAILABLE)
-  dedicatedFleet     Boolean        @default(false)
+  id                 String       @id
+  status             String       @default("AVAILABLE")
+  dedicatedFleet     Boolean      @default(false)
   blockedDescription String?
   createdAt          DateTime
   truckTractorId     String
@@ -18,9 +11,9 @@ model TruckSet {
   ownerId            String
   updatedAt          DateTime?
   deletedAt          DateTime?
-  owner              Person         @relation(fields: [ownerId], references: [id])
-  cartThree          Cart?          @relation("CartThree", fields: [cartThreeId], references: [id])
-  cartTwo            Cart?          @relation("CartTwo", fields: [cartTwoId], references: [id])
-  cartOne            Cart?          @relation("CartOne", fields: [cartOneId], references: [id])
-  truckTractor       TruckTractor   @relation(fields: [truckTractorId], references: [id])
+  truckTractor       TruckTractor @relation(fields: [truckTractorId], references: [id])
+  cartOne            Cart?        @relation("CartOne", fields: [cartOneId], references: [id])
+  cartTwo            Cart?        @relation("CartTwo", fields: [cartTwoId], references: [id])
+  cartThree          Cart?        @relation("CartThree", fields: [cartThreeId], references: [id])
+  owner              Person       @relation(fields: [ownerId], references: [id])
 }
