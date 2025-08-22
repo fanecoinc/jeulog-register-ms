@@ -2,6 +2,7 @@ import { IPersonRepository } from '@/domain/ports/Person.repository';
 import { prismaClient } from '../database';
 import { Person } from '@/domain/entities/Person';
 import { Tag } from '@/domain/entities/Tag';
+import { Errors } from 'moleculer';
 
 export class PrismaPersonRepository implements IPersonRepository {
   private mapToPersonEntity(instance: Record<string, any>): Person {
@@ -102,6 +103,15 @@ export class PrismaPersonRepository implements IPersonRepository {
   }
 
   async update(id: string, person: Partial<Person>): Promise<Person> {
+    const existingPerson = await this.findById(id);
+
+    if (!existingPerson)
+      throw new Errors.MoleculerClientError(
+        'Registro não encontrado',
+        404,
+        'P2025'
+      );
+
     const [_personAfterReset, updatedPerson] = await prismaClient.$transaction([
       prismaClient.person.update({
         where: { id },
@@ -118,19 +128,19 @@ export class PrismaPersonRepository implements IPersonRepository {
         where: { id },
         data: {
           id: person.id,
-          legalPerson: person.legalPerson,
-          document: person.document,
-          name: person.name,
-          city: person.city,
-          state: person.state,
-          cep: person.cep,
-          key: person.key,
-          polygon: person.polygon,
-          isHeadquarter: person.isHeadquarter,
-          isOrigin: person.isOrigin,
-          isDestiny: person.isDestiny,
-          isCarrier: person.isCarrier,
-          isActive: person.isActive,
+          legalPerson: person.legalPerson ?? existingPerson.legalPerson,
+          document: person.document ?? existingPerson.document,
+          name: person.name ?? existingPerson.name,
+          city: person.city ?? existingPerson.city,
+          state: person.state ?? existingPerson.state,
+          cep: person.cep ?? existingPerson.cep,
+          key: person.key ?? existingPerson.key,
+          polygon: person.polygon ?? existingPerson.polygon,
+          isHeadquarter: person.isHeadquarter ?? existingPerson.isHeadquarter,
+          isOrigin: person.isOrigin ?? existingPerson.isOrigin,
+          isDestiny: person.isDestiny ?? existingPerson.isDestiny,
+          isCarrier: person.isCarrier ?? existingPerson.isCarrier,
+          isActive: person.isActive ?? existingPerson.isActive,
           tags: person.tags
             ? {
                 create: person.tags.map((p) => ({
@@ -138,9 +148,9 @@ export class PrismaPersonRepository implements IPersonRepository {
                 })),
               }
             : undefined,
-          createdAt: person.createdAt,
-          latitude: person.latitude,
-          longitude: person.longitude,
+          createdAt: person.createdAt ?? existingPerson.createdAt,
+          latitude: person.latitude ?? existingPerson.latitude,
+          longitude: person.longitude ?? existingPerson.longitude,
         },
         include: {
           tags: {
